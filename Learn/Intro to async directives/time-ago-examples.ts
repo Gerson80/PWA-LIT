@@ -1,5 +1,6 @@
 import {html, css, LitElement} from 'lit';
 import {customElement} from 'lit/decorators.js';
+import './comment-card.js';
 
 import {timeAgo} from './time-ago.js';
 
@@ -10,15 +11,14 @@ export class TimeAgoExample extends LitElement {
 
   render() {
     return html`
-      <p @click=${this.handleClick}>
-        This page was rendered ${timeAgo(timeCreated)}.
-      </p>
+      <p>This page was rendered ${timeAgo(timeCreated)}.</p>
+
+      <comment-card user="litdeveloper"
+                time=${timeAgo(timeCreated)}
+                subject="Just tried AsyncDirectives!"
+                content="Cool stuff, they're really powerful!">
+      </comment-card>
     `;
   }
 
-  handleClick() {
-    const parent = this.parentNode;
-    this.remove();
-    setTimeout(() => parent!.appendChild(this), 1000);
-  }
 }
