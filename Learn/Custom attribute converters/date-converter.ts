@@ -1,18 +1,12 @@
-import {LitElement, html} from 'lit';
-import {customElement, property} from 'lit/decorators.js';
-import {dateConverter} from './date-converter.js';
+import type {ComplexAttributeConverter} from 'lit';
 
-@customElement('date-display')
-export class DateDisplay extends LitElement {
-  @property({converter: dateConverter})
-  date = new Date();
-
-  render() {
-    const locale = 'en-US';
-    const options: Intl.DateTimeFormatOptions =
-        {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-    return html`
-      <p>The given date is: ${this.date.toLocaleDateString(locale, options)}</p>
-    `;
+export const dateConverter = (locale: string): ComplexAttributeConverter<Date> => {
+  return {
+    toAttribute: (date: Date) => {
+      return date.toLocaleDateString(locale);
+    },
+    fromAttribute: (value: string) => {
+      return new Date(value);
+    }
   }
-}
+};
